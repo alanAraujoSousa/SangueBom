@@ -16,6 +16,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = patterns('',
     url(r'^engine/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-auth-token/', views.obtain_auth_token, name='authentication'),
     url(r'^admin/', include(admin.site.urls)),
 )
