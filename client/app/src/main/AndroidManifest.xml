@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.bom.sangue.sanguebom.provider.DBProvider"
+            android:name=".provider.DBProvider"/>
     </application>
 
 </manifest>
