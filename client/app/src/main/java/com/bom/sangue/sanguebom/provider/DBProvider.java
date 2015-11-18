@@ -1,6 +1,7 @@
 package com.bom.sangue.sanguebom.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
@@ -20,42 +21,24 @@ public class DBProvider extends ContentProvider {
 
     public static final Uri CONTENT_URI = Uri.parse("content://com.bom.sangue.sanguebom.provider.DBProvider");
 
-    // Authority do nosso provider, a ser usado nas Uris.
     public static final String AUTHORITY =
             "com.bom.sangue.sanguebom.provider.DBProvider";
 
-    // Nome do arquivo que irá conter o banco de dados.
     private static  final String DATABASE_NAME = "sanguebom.db";
 
-    // Versao do banco de dados.
-    // Este valor é importante pois é usado em futuros updates do DB.
     private static  final int  DATABASE_VERSION = 1;
 
-    // Nome da tabela que irá conter o usuario.
     private static final  String USER_TABLE = "user";
 
-    // Nome da tabela que ira conter todas as doaçoes.
-    private static final String DONATION_TABLE = "donations";
+    private static final String DONATION_TABLE = "donation";
 
-    // 'Id' da Uri referente às notas do usuário.
     private  static final int USERS = 1;
 
-    // Tag usada para imprimir os logs.
     public static final String TAG = "DBProvider";
 
-    // Instância da classe utilitária
     private DBHelper mHelper;
 
-    // Uri matcher - usado para extrair informações das Uris
     private static final UriMatcher mMatcher;
-
-    private static HashMap<String, String> mProjection;
-
-// static {
-//        mProjection = new HashMap<String, String>();
-//        mProjection.put(User.USER_ID, Notes.NOTE_ID);
-//        mProjection.put(Notes.TEXT, Notes.TEXT);
-//    }
 
     static {
         mMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -74,7 +57,21 @@ public class DBProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        switch (mMatcher.match(uri)) {
+            case USERS:
+                SQLiteDatabase db = mHelper.getWritableDatabase();
+                long rowId = db.insert(USER_TABLE, null, values);
+                if (rowId > 0) {
+                    Uri userUri = ContentUris.withAppendedId(
+                            User.CONTENT_URI, rowId);
+                    getContext().getContentResolver().notifyChange(
+                            userUri, null);
+                    return userUri;
+                }
+            default:
+                throw new IllegalArgumentException(
+                        "URI desconhecida " + uri);
+        }
     }
 
     @Override
@@ -95,7 +92,7 @@ public class DBProvider extends ContentProvider {
 
     public static final class  User implements BaseColumns {
         public static final Uri CONTENT_URI = Uri.parse("content://"
-                + DBProvider.AUTHORITY + "/user");
+                + DBProvider.AUTHORITY + "/" + USER_TABLE);
 
         public static final String CONTENT_TYPE =
                 "vnd.android.cursor.dir/" + DBProvider.AUTHORITY;
@@ -105,9 +102,29 @@ public class DBProvider extends ContentProvider {
         public static Map<String, String> USER_COLUMNS = new HashMap<String, String>();
 
         static {
+            USER_COLUMNS.put("id", "INTEGER PRIMARY KEY AUTOINCREMENT");
             USER_COLUMNS.put("login", "LONGTEXT");
+            USER_COLUMNS.put("token", "LONGTEXT");
         }
     }
+
+    public static class Donation implements BaseColumns {
+        public static final Uri CONTENT_URI = Uri.parse("content://"
+                + DBProvider.AUTHORITY + "/" + DONATION_TABLE);
+
+        public static final String CONTENT_TYPE =
+                "vnd.android.cursor.dir/" + DBProvider.AUTHORITY;
+
+        public static final String DONATION_ID = "_id";
+
+        public static Map<String, String> DONATION_COLUMNS = new HashMap<String, String>();
+
+        static {
+            DONATION_COLUMNS.put("id", "INTEGER PRIMARY KEY AUTOINCREMENT");
+            DONATION_COLUMNS.put("donationDate", "DATETIME");
+        }
+    }
+
 
     private static class DBHelper extends SQLiteOpenHelper {
 
@@ -117,15 +134,21 @@ public class DBProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+
             String userColumns = "";
+            String donationColumns = "";
             for (Map.Entry<String, String> entry : User.USER_COLUMNS.entrySet()) {
-                String columnName = entry.getKey();
-                String columnType = entry.getValue();
-                userColumns += ", " + columnName + " " + columnType;
+                userColumns += ", " + entry.getKey() + " " + entry.getValue();
             }
-            db.execSQL("CREATE TABLE " + USER_TABLE + " (" +
-                    User.USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
-                    userColumns + ");");
+            for (Map.Entry<String, String> entry : Donation.DONATION_COLUMNS.entrySet()) {
+                donationColumns += ", " + entry.getKey() + " " + entry.getValue();
+            }
+
+            db.execSQL(
+                    "CREATE TABLE " + USER_TABLE + " (" +
+                            userColumns + ");" +
+                            "CREATE TABLE " + DONATION_TABLE + " (" +
+                            donationColumns + ");");
         }
 
         @Override
