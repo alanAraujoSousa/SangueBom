@@ -9,12 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.bom.sangue.sanguebom.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
+
+import java.util.concurrent.Future;
+
 
 /**
  * Created by alan on 09/11/15.
  */
 public class MyProfileFragment extends Fragment{
 
+    private static final String URL_SIGNUP = "";
     View rootView;
 
     @Override
@@ -41,6 +51,32 @@ public class MyProfileFragment extends Fragment{
             EditText passwordBox = (EditText) rootView.findViewById(R.id.signup_password);
             EditText emailBox = (EditText) rootView.findViewById(R.id.signup_email);
 
+            // TODO Validade data.
+            // TODO create a user to send.
+
+            Gson gson = new Gson();
+            JsonObject user = new JsonObject();
+            JsonObject profile = new JsonObject();
+            user.addProperty("username", "");
+            user.addProperty("password", "");
+            user.addProperty("email", "");
+            user.add("userProfile", profile);
+            profile.addProperty("blood_type", "");
+            profile.addProperty("birth_day", "");
+
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            Future<Integer> f = client.preparePost(URL_SIGNUP).setBody(user.toString())
+                    .execute(new AsyncCompletionHandler<Integer>() {
+                @Override
+                public Integer onCompleted(Response response) throws Exception {
+
+                    return response.getStatusCode();
+                }
+            });
+
+
+//            HttpClient httpclient = new DefaultHttpClient();
 
         }
     };
