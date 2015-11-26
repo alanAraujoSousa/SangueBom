@@ -2,6 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cadastre-se"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/signup_login"
+        android:layout_above="@+id/signup_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,40 +35,51 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/signup_login"
-        android:layout_above="@+id/signup_password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/signup_email"
         android:layout_below="@+id/signup_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginTop="40dp" />
 
-    <TextView
+    <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cadastre-se"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
+        android:id="@+id/signup_birth_date"
+        android:layout_below="@+id/signup_email"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginTop="40dp" />
+
+    <RadioGroup
+        android:id="@+id/signup_blood_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signup_birth_date"
+        android:layout_centerHorizontal="true">
+        <RadioButton
+            android:id="@+id/signup_blood_o_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O+"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/signup_blood_o_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O-" />
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrar!"
         android:id="@+id/signup_button"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/signup_email" />
+        android:layout_below="@+id/signup_blood_type" />
+
+
+
+
 </RelativeLayout>

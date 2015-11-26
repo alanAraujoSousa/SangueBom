@@ -8,6 +8,7 @@ public class User implements Persistent{
     private Long id;
     private String login;
     private String password;
+    private String token;
 
     public String getLogin() {
         return login;
@@ -33,5 +34,13 @@ public class User implements Persistent{
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -46,10 +46,6 @@ public class MyProfileFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (isUserRegistered()) {
-            rootView = inflater.inflate(R.layout.signup, container, false);
-            Button signupButton = (Button) rootView.findViewById(R.id.signup_button);
-            signupButton.setOnClickListener(mSignUpUserListener);
-        } else {
             if (hasToken()) {
                 rootView = inflater.inflate(R.layout.my_profile_layout, container, false);
             } else {
@@ -57,6 +53,10 @@ public class MyProfileFragment extends Fragment{
                 Button signButton = (Button) rootView.findViewById(R.id.sign_button);
                 signButton.setOnClickListener(mSignUserListener);
             }
+        } else {
+            rootView = inflater.inflate(R.layout.signup, container, false);
+            Button signupButton = (Button) rootView.findViewById(R.id.signup_button);
+            signupButton.setOnClickListener(mSignUpUserListener);
         }
         return rootView;
     }
@@ -128,13 +128,18 @@ public class MyProfileFragment extends Fragment{
     private boolean isUserRegistered() {
         UserDAO userDAO = UserDAO.getInstance(getContext());
         User user = userDAO.findById(1); // Always save user on ID 1.
+        userDAO.closeConnection();
         if (user!=null)
                 return true;
         return false;
     }
 
     private boolean hasToken() {
-
+        UserDAO userDAO = UserDAO.getInstance(getContext());
+        User user = userDAO.findById(1); // Always save user on ID 1.
+        userDAO.closeConnection();
+        if (user!=null && user.getToken() != null && !user.getToken().isEmpty())
+            return true;
         return false;
     }
 }
