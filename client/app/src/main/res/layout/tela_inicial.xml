@@ -20,7 +20,7 @@
         android:background="@drawable/title_login"
         android:layout_below="@id/logosb"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         />
 
     <EditText

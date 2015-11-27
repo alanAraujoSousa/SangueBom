@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/background_sb"
     tools:context=".NavigationDrawerFragment">
 
     <TextView
@@ -10,10 +10,11 @@
         style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:drawableLeft="@drawable/sangue_bom_logo"
+        android:drawableLeft="@drawable/logo_sb"
         android:gravity="center_vertical"
-        android:padding="25dp" />
+        android:padding="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:id="@+id/navigationItems"

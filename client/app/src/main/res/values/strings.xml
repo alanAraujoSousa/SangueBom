@@ -6,8 +6,23 @@
     <string name="usuario">Insira seu usuario</string>
     <string name="senha">Insira sua senha</string>
     <string name="entrar">Entrar</string>
+    <string name="usuariocadastro"> Insira seu ID </string>
+    <string name="senhacadastro">Insira sua senha</string>
+    <string name="confirmarsenhacadastro">confirme sua senha</string>
+    <string name="emailcadastro"> Insira seu E-mail </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string-array name="categoria_sangue">
+        <item> A</item>
+        <item> B</item>
+        <item> AB</item>
+        <item> O</item>
+
+
+
+    </string-array>
+
 
     <string name="action_example">Example action</string>
 
