@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -50,7 +51,7 @@ public class MyProfileFragment extends Fragment{
             }
         } else {
             rootView = inflater.inflate(R.layout.signup, container, false);
-            Button signupButton = (Button) rootView.findViewById(R.id.signup_button);
+            ImageButton signupButton = (ImageButton) rootView.findViewById(R.id.signup_button);
             signupButton.setOnClickListener(mSignUpUserListener);
         }
         return rootView;
