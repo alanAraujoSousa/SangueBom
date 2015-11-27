@@ -3,7 +3,9 @@
 
     <string name="title_section1">My Profile</string>
     <string name="title_section2">Blood C</string>
-
+    <string name="usuario">Insira seu usuario</string>
+    <string name="senha">Insira sua senha</string>
+    <string name="entrar">Entrar</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
