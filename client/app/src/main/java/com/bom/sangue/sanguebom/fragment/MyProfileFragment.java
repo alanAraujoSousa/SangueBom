@@ -39,11 +39,6 @@ public class MyProfileFragment extends Fragment{
     View rootView;
 
     @Override
-    public void onResume() {
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (isUserRegistered()) {
             if (hasToken()) {
