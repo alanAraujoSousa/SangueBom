@@ -12,17 +12,14 @@
     <string name="emailcadastro"> Insira seu E-mail </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="categoria">Close </string>
 
     <string-array name="categoria_sangue">
-        <item> A</item>
-        <item> B</item>
-        <item> AB</item>
-        <item> O</item>
-
-
-
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+        <item>O</item>
     </string-array>
-
 
     <string name="action_example">Example action</string>
 

@@ -29,8 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return instance;
     }
 
-    // comitt
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(UserDAO.SCRIPT_CREATE_TABLE);

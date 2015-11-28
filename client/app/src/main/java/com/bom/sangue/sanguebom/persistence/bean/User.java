@@ -8,7 +8,18 @@ public class User implements Persistent{
     private Long id;
     private String login;
     private String password;
+    private String email;
     private String token;
+
+    public User(String login, String password, String email, String token) {
+        this.login = login;
+        this.password = password;
+        this.token = token;
+        this.email = email;
+    }
+
+    public User() {
+    }
 
     public String getLogin() {
         return login;
@@ -42,5 +53,13 @@ public class User implements Persistent{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

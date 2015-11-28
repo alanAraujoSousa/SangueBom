@@ -27,20 +27,12 @@ public class MainActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private String mTitle;
-    private Spinner categoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(
-                        this, R.array.categoria_sangue,
-                        android.R.layout.simple_spinner_item);
-        categoria = (Spinner) findViewById(R.id.tipo_sanguineo);
-        categoria.setAdapter(adapter);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);

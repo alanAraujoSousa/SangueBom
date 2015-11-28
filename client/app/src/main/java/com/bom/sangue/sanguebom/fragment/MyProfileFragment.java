@@ -1,33 +1,26 @@
 package com.bom.sangue.sanguebom.fragment;
 
-import android.content.ContentValues;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.bom.sangue.sanguebom.R;
 import com.bom.sangue.sanguebom.persistence.bean.User;
 import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
-import com.bom.sangue.sanguebom.provider.DBProvider;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import java.util.concurrent.Future;
 
 
@@ -36,7 +29,7 @@ import java.util.concurrent.Future;
  */
 public class MyProfileFragment extends Fragment{
 
-    private static final String URL_SIGNUP = "";
+    private static final String URL_SIGNUP = "/user";
     View rootView;
 
     @Override
@@ -51,6 +44,13 @@ public class MyProfileFragment extends Fragment{
             }
         } else {
             rootView = inflater.inflate(R.layout.signup, container, false);
+            ArrayAdapter<CharSequence> adapter =
+                    ArrayAdapter.createFromResource(getActivity()
+                            , R.array.categoria_sangue,
+                            android.R.layout.simple_spinner_item);
+
+            Spinner categoria = (Spinner) rootView.findViewById(R.id.signup_blood_type);
+            categoria.setAdapter(adapter);
             ImageButton signupButton = (ImageButton) rootView.findViewById(R.id.signup_button);
             signupButton.setOnClickListener(mSignUpUserListener);
         }
@@ -59,9 +59,9 @@ public class MyProfileFragment extends Fragment{
 
     private View.OnClickListener mSignUpUserListener = new View.OnClickListener() {
         public void onClick(View v) {
-            EditText loginBox = (EditText) rootView.findViewById(R.id.signup_login);
-            EditText passwordBox = (EditText) rootView.findViewById(R.id.signup_password);
-            EditText emailBox = (EditText) rootView.findViewById(R.id.signup_email);
+            final String login = ((EditText) rootView.findViewById(R.id.signup_login)).getText().toString();
+            final String password = ((EditText) rootView.findViewById(R.id.signup_password)).getText().toString();
+            final String email = ((EditText) rootView.findViewById(R.id.signup_email)).getText().toString();
 
             // TODO Validade data.
             // TODO create a user to send.
@@ -69,12 +69,12 @@ public class MyProfileFragment extends Fragment{
             Gson gson = new Gson();
             JsonObject user = new JsonObject();
             JsonObject profile = new JsonObject();
-            user.addProperty("username", "");
-            user.addProperty("password", "");
-            user.addProperty("email", "");
+            user.addProperty("username", login);
+            user.addProperty("password", password);
+            user.addProperty("email", email);
             user.add("userProfile", profile);
 
-            DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.signup_birth_date);
+            /*DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.signup_birth_date);
             int day = datePicker.getDayOfMonth();
             int month = datePicker.getMonth();
             int year = datePicker.getYear();
@@ -84,34 +84,39 @@ public class MyProfileFragment extends Fragment{
             Date birthDate = new Date();
             Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
             cal.set(year, month, day, 0, 0, 0);
+            String date = cal.getTime().getTime()
+            */
 
-            profile.addProperty("birth_day", cal.getTime().getTime());
+            profile.addProperty("birth_day", "10-20-1993"); // FIXME
 
-            RadioGroup rG = (RadioGroup) rootView.findViewById(R.id.signup_blood_type);
+            Spinner spinner = (Spinner) rootView.findViewById(R.id.signup_blood_type);
+            String bloodType = spinner.getSelectedItem().toString();
 
-            Integer radioID = rG.getCheckedRadioButtonId();
-            String bloodType = "";
-            switch (radioID) {
-                case R.id.signup_blood_o_plus:
-                    bloodType = "o+";
-                    break;
-                case R.id.signup_blood_o_minus:
-                    bloodType = "o-";
-                    break;
-            }
             profile.addProperty("blood_type", bloodType);
 
             AsyncHttpClient client = new AsyncHttpClient();
-            Future<Integer> f = client.preparePost(URL_SIGNUP).setBody(user.toString())
+            client.preparePost(URL_SIGNUP).setBody(user.toString())
                     .execute(new AsyncCompletionHandler<Integer>() {
                         @Override
                         public Integer onCompleted(Response response) throws Exception {
-
-                            return response.getStatusCode();
+                            int statusCode = response.getStatusCode();
+                            switch (statusCode) {
+                                case 204:
+                                    String token = response.getResponseBody();
+                                    registeUser(new User(login,password,email,token));
+                                    break;
+                            }
+                            return null;
                         }
                     });
         }
     };
+
+    private void registeUser(User user) {
+        UserDAO userDAO = UserDAO.getInstance(getContext());
+        userDAO.save(user);
+        userDAO.closeConnection();
+    }
 
     private View.OnClickListener mSignUserListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -125,8 +130,8 @@ public class MyProfileFragment extends Fragment{
         UserDAO userDAO = UserDAO.getInstance(getContext());
         User user = userDAO.findById(1); // Always save user on ID 1.
         userDAO.closeConnection();
-        if (user!=null)
-                return true;
+        if (user != null)
+            return true;
         return false;
     }
 
@@ -134,7 +139,7 @@ public class MyProfileFragment extends Fragment{
         UserDAO userDAO = UserDAO.getInstance(getContext());
         User user = userDAO.findById(1); // Always save user on ID 1.
         userDAO.closeConnection();
-        if (user!=null && user.getToken() != null && !user.getToken().isEmpty())
+        if (user != null && user.getToken() != null && !user.getToken().isEmpty())
             return true;
         return false;
     }
