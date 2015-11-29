@@ -11,4 +11,12 @@
         android:layout_marginTop="30dp"
         />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lista"
+        android:layout_below="@id/title_emergency"
+        android:layout_centerHorizontal="true"/>
+
+
 </RelativeLayout>
