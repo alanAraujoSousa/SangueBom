@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity
                 UserDAO userDAO = UserDAO.getInstance(getApplicationContext());
                 userDAO.deleteMyUser();
                 userDAO.closeConnection();
-                System.exit(0);
+//                System.exit(0);
+                instance = new MyProfileFragment();
+                tag = "MyProfileFragment";
                 break;
         }
 

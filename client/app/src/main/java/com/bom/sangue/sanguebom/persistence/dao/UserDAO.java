@@ -66,8 +66,6 @@ public class UserDAO extends GenericDAO<User> {
     }
 
     public void deleteMyUser() {
-        User user = new User();
-        user.setId(1l);
-        super.delete(user);
+        dataBase.execSQL("DELETE FROM " + getTableName());
     }
 }
