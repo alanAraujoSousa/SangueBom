@@ -18,10 +18,14 @@
     <string name="categoria">Close </string>
 
     <string-array name="categoria_sangue">
-        <item>A</item>
-        <item>B</item>
-        <item>AB</item>
-        <item>O</item>
+        <item>O-</item>
+        <item>O+</item>
+        <item>A-</item>
+        <item>A+</item>
+        <item>B-</item>
+        <item>B+</item>
+        <item>AB-</item>
+        <item>AB+</item>
     </string-array>
 
     <string name="action_example">Example action</string>
