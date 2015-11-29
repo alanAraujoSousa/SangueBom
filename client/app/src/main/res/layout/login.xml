@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_login"
         android:background="@drawable/title_login"
-        android:layout_below="@id/menu"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         />
