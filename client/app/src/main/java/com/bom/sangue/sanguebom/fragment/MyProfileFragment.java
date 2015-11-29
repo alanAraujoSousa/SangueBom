@@ -24,6 +24,8 @@ import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by alan on 09/11/15.
  */
@@ -80,7 +82,13 @@ public class MyProfileFragment extends Fragment{
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                                error.printStackTrace();
+                                byte[] data  = error.networkResponse.data;
+                                try {
+                                    Log.e("SANGUE_BOM REQUEST", "onErrorResponse " + new String(data, "UTF-8"));
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
 
@@ -100,8 +108,13 @@ public class MyProfileFragment extends Fragment{
     }
 
     private void registerUser(User user) {
+        user.setId(1l);
         UserDAO userDAO = UserDAO.getInstance(getContext());
-        userDAO.save(user);
+        User userDB = userDAO.findById(1); // Always save user on ID 1.
+        if (userDB != null)
+            userDAO.update(user);
+        else
+            userDAO.save(user);
         userDAO.closeConnection();
     }
 
