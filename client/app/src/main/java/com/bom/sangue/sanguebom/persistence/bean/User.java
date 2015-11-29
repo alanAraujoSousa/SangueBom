@@ -1,5 +1,7 @@
 package com.bom.sangue.sanguebom.persistence.bean;
 
+import com.bom.sangue.sanguebom.provider.DBProvider;
+
 /**
  * Created by alan on 25/11/15.
  */
@@ -22,6 +24,10 @@ public class User implements Persistent{
         this.login = login;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String token) {
+        this.token = token;
     }
 
     public User() {

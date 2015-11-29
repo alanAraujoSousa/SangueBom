@@ -7,22 +7,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.bom.sangue.sanguebom.R;
+import com.bom.sangue.sanguebom.Utils.Constants;
 import com.bom.sangue.sanguebom.Utils.HttpManager;
 import com.bom.sangue.sanguebom.persistence.bean.User;
 import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
-
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,112 +28,29 @@ import org.json.JSONObject;
  */
 public class MyProfileFragment extends Fragment{
 
-    private static final String HOST = "10.0.2.2";
-    private static final String PORT = "8000";
-    private static final String URL_SIGNUP = "http://" + HOST+":"+PORT+"/engine/users/";
-    private static final String URL_SIGN = "http://"+HOST+":"+PORT+"/api-auth-token/";
-
     View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("REFRESH FRAGMENT", "onCreateView ");
-
-        if (isUserRegistered()) {
-            if (hasToken()) {
-                rootView = inflater.inflate(R.layout.my_profile_layout, container, false);
-            } else {
-                rootView = inflater.inflate(R.layout.login, container, false);
-                ImageButton signButton = (ImageButton) rootView.findViewById(R.id.sign_btn);
-                signButton.setOnClickListener(mSignUserListener);
-            }
+        Log.i("SANGUE_BOM:", "onCreateView ");
+        if (hasToken()) {
+            rootView = inflater.inflate(R.layout.my_profile_layout, container, false);
         } else {
-            rootView = inflater.inflate(R.layout.signup, container, false);
-            ArrayAdapter<CharSequence> adapter =
-                    ArrayAdapter.createFromResource(getActivity()
-                            , R.array.categoria_sangue,
-                            android.R.layout.simple_spinner_item);
-
-            ((Spinner) rootView.findViewById(R.id.signup_blood_type)).setAdapter(adapter);
-            ImageButton btn = (ImageButton) rootView.findViewById(R.id.signup_btn);
-            btn.setOnClickListener(mSignUpUserListener);
+            rootView = inflater.inflate(R.layout.login, container, false);
+            ImageButton signButton = (ImageButton) rootView.findViewById(R.id.sign_btn);
+            signButton.setOnClickListener(mSignUserListener);
         }
         return rootView;
     }
 
-    private View.OnClickListener mSignUpUserListener = new View.OnClickListener() {
+    private View.OnClickListener mRedirectToSignup = new View.OnClickListener() {
+        @Override
         public void onClick(View v) {
-            final String login = ((EditText) rootView.findViewById(R.id.signup_login)).getText().toString();
-            final String password = ((EditText) rootView.findViewById(R.id.signup_password)).getText().toString();
-            final String email = ((EditText) rootView.findViewById(R.id.signup_email)).getText().toString();
-
-            // TODO Validade data.
-            // TODO create a user to send.
-
-           /* DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.signup_birth_date);
-            int day = datePicker.getDayOfMonth();
-            int month = datePicker.getMonth();
-            int year = datePicker.getYear();
-
-            // TODO Validate the birthDate only +18 !
-
-            Date birthDate = new Date();
-            Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-            cal.set(year, month, day, 0, 0, 0);
-            String date = cal.getTime().getTime()
-*/
-
-            Spinner spinner = (Spinner) rootView.findViewById(R.id.signup_blood_type);
-            String bloodType = spinner.getSelectedItem().toString();
-
-            try {
-                final JSONObject user = new JSONObject();
-                JSONObject profile = new JSONObject();
-                user.put("username", login);
-                user.put("password", password);
-                user.put("email", email);
-                user.put("userProfile", profile);
-                profile.put("birth_date", "20-11-2002");
-                profile.put("blood_type", bloodType);
-
-
-                JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, URL_SIGNUP, user,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                refreshScreen();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("SANGUE_BOM REQUEST", "onErrorResponse " + error.getMessage());
-                            }
-                        });
-
-                HttpManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-           /* new AsyncHttpClient().preparePost(URL_SIGNUP).setBody(user.toString())
-                    .execute(new AsyncCompletionHandler<Integer>() {
-                        @Override
-                        public Integer onCompleted(Response response) throws Exception {
-                            int statusCode = response.getStatusCode();
-
-                            switch (statusCode) {
-                                case 201:
-//                                  registerUser(new User(login, password, email));
-                                    refreshScreen();
-                                    break;
-                            }
-                            return null;
-                        }
-                    });*/
+            final FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.container, new SignupFragment());
+            ft.commit();
         }
     };
-
 
     private View.OnClickListener mSignUserListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -152,59 +65,35 @@ public class MyProfileFragment extends Fragment{
                 j.put("username", login);
                 j.put("password", password);
 
-                JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, URL_SIGN, j,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            setToken(response.toString());
-                            refreshScreen();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, Constants.URL_SIGN, j,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                String token = response.toString();
+                                registerUser(new User(token));
+                                refreshScreen();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                        }
-                    });
+                            }
+                        });
 
                 HttpManager.getInstance(getContext()).addToRequestQueue(stringRequest);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            /*new AsyncHttpClient().preparePost(URL_SIGN).setBody(user.toString())
-                    .execute(new AsyncCompletionHandler<Integer>() {
-                        @Override
-                        public Integer onCompleted(Response response) throws Exception {
-                            int statusCode = response.getStatusCode();
-                            Log.i("Sign", "onCompleted status:" + statusCode);
-                            switch (statusCode) {
-                                case 200:
-                                    String token = response.getResponseBody();
-//                                    setToken(token);
-                                    Log.e("Sign", "Token: " + token);
-                                    refreshScreen();
-                                    break;
-                            }
-                            return null;
-                        }
-                    });*/
         }
     };
 
     private void refreshScreen() {
-        Fragment frg = getActivity().getSupportFragmentManager().findFragmentById(0);
+        Fragment frg = getActivity().getSupportFragmentManager().findFragmentByTag("MyProfileFragment");
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.detach(frg);
         ft.attach(frg);
         ft.commit();
-    }
-
-    private void setToken(String token) {
-        UserDAO userDAO = UserDAO.getInstance(getContext());
-        User user = userDAO.findById(1);
-        user.setToken(token);
-        userDAO.update(user);
-        userDAO.closeConnection();
     }
 
     private void registerUser(User user) {

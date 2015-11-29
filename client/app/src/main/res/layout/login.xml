@@ -57,6 +57,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastre-se"
+        android:id="@+id/sign_btn_signup"
+        android:layout_below="@+id/sign_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
 
 </RelativeLayout>

@@ -43,17 +43,20 @@ public class MainActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment instance = null;
+        String tag = "";
         switch (position) {
             case 0:
                 instance = new MyProfileFragment();
+                tag = "MyProfileFragment";
                 break;
             case 1:
                 instance = new BloodCompatibility();
+                tag = "BloodCompatibility";
                 break;
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, instance)
+                .replace(R.id.container, instance, tag)
                 .commit();
 
     }
