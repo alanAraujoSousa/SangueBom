@@ -4,7 +4,7 @@ package com.bom.sangue.sanguebom.persistence.bean;
  * Created by alan on 25/11/15.
  */
 public class User implements Persistent{
-    //Id
+
     private Long id;
     private String login;
     private String password;
@@ -15,6 +15,12 @@ public class User implements Persistent{
         this.login = login;
         this.password = password;
         this.token = token;
+        this.email = email;
+    }
+
+    public User(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
         this.email = email;
     }
 
