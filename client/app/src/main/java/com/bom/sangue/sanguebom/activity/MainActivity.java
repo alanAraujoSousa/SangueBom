@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
             case 2:
                 UserDAO userDAO = UserDAO.getInstance(getApplicationContext());
                 userDAO.deleteMyUser();
+                userDAO.closeConnection();
                 System.exit(0);
                 break;
         }

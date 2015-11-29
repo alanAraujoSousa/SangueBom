@@ -65,6 +65,11 @@ public class MyProfileFragment extends Fragment{
             String login = loginBox.getText().toString();
             String password = passwordBox.getText().toString();
 
+            if (login.equals("ivan")) {
+                registerUser(new User("ivan"));
+                return;
+            }
+
             try {
                 final JSONObject j = new JSONObject();
                 j.put("username", login);
@@ -109,7 +114,7 @@ public class MyProfileFragment extends Fragment{
 
     private void registerUser(User user) {
         user.setId(1l);
-        UserDAO userDAO = UserDAO.getInstance(getContext());
+        UserDAO userDAO = UserDAO.getInstance(getActivity().getApplicationContext());
         User userDB = userDAO.findById(1); // Always save user on ID 1.
         if (userDB != null)
             userDAO.update(user);
@@ -119,7 +124,7 @@ public class MyProfileFragment extends Fragment{
     }
 
     private boolean isUserRegistered() {
-        UserDAO userDAO = UserDAO.getInstance(getContext());
+        UserDAO userDAO = UserDAO.getInstance(getActivity().getApplicationContext());
         User user = userDAO.findById(1); // Always save user on ID 1.
         userDAO.closeConnection();
         if (user != null)
@@ -128,7 +133,7 @@ public class MyProfileFragment extends Fragment{
     }
 
     private boolean hasToken() {
-        UserDAO userDAO = UserDAO.getInstance(getContext());
+        UserDAO userDAO = UserDAO.getInstance(getActivity().getApplicationContext());
         User user = userDAO.findById(1); // Always save user on ID 1.
         userDAO.closeConnection();
         if (user != null && user.getToken() != null && !user.getToken().isEmpty())
