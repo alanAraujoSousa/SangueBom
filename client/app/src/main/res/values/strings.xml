@@ -6,6 +6,7 @@
     <string name="usuario">Insira seu usuario</string>
     <string name="senha">Insira sua senha</string>
     <string name="entrar">Entrar</string>
+    <string name="nomecadastro"> Insira seu nome </string>
     <string name="usuariocadastro"> Insira seu ID </string>
     <string name="senhacadastro">Insira sua senha</string>
     <string name="confirmarsenhacadastro">confirme sua senha</string>

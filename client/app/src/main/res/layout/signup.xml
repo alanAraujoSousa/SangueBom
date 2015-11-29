@@ -61,8 +61,19 @@
         android:background="@drawable/tittle_cadastro"
         android:layout_below="@id/menu"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/nomecadastro"
+        android:ems="10"
+        android:id="@+id/nomedoador"
+        android:layout_below="@+id/title_cadastro"
+        android:layout_centerHorizontal="true"
+         />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,9 +82,9 @@
         android:hint="@string/usuariocadastro"
         android:ems="10"
         android:id="@+id/signup_login"
-        android:layout_below="@+id/title_cadastro"
+        android:layout_below="@+id/nomedoador"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="2dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -84,7 +95,7 @@
         android:layout_below="@id/signup_login"
         android:id="@+id/signup_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -95,7 +106,7 @@
         android:layout_below="@id/signup_password"
         android:id="@+id/confirm_signup_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        />
 
 
     <EditText
@@ -107,12 +118,30 @@
         android:hint="@string/emailcadastro"
         android:layout_below="@+id/confirm_signup_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/signup_email"
+        android:id="@+id/titledatanascimento"
+        android:text="Data de Nascimento:"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="datetime"
+        android:ems="10"
+        android:id="@+id/datanascimento"
+        android:layout_below="@+id/titledatanascimento"
+        android:layout_centerHorizontal="true"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datanascimento"
         android:id="@+id/titletiposanguineo"
         android:text="Tipo sanguíneo:"
         android:layout_centerHorizontal="true"
@@ -125,8 +154,7 @@
         android:prompt="@string/categoria"
         android:layout_below="@id/titletiposanguineo"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        >
     </Spinner>
 
 
