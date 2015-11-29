@@ -42,7 +42,7 @@ public class MyProfileFragment extends Fragment{
             rootView = inflater.inflate(R.layout.login, container, false);
             ImageButton signButton = (ImageButton) rootView.findViewById(R.id.sign_btn);
             signButton.setOnClickListener(mSignUserListener);
-            Button signupButton = (Button) rootView.findViewById(R.id.sign_btn_signup);
+            ImageButton signupButton = (ImageButton) rootView.findViewById(R.id.sign_btn_signup);
             signupButton.setOnClickListener(mRedirectToSignup);
         }
         return rootView;
