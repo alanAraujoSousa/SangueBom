@@ -64,4 +64,10 @@ public class UserDAO extends GenericDAO<User> {
         user.setToken(contentValues.getAsString(TOKEN));
         return user;
     }
+
+    public void deleteMyUser() {
+        User user = new User();
+        user.setId(1l);
+        super.delete(user);
+    }
 }

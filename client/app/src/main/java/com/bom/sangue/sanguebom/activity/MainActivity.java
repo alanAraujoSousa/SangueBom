@@ -14,6 +14,7 @@ import com.bom.sangue.sanguebom.fragment.BloodCompatibility;
 import com.bom.sangue.sanguebom.fragment.MyProfileFragment;
 import com.bom.sangue.sanguebom.fragment.NavigationDrawerFragment;
 import com.bom.sangue.sanguebom.R;
+import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -52,6 +53,11 @@ public class MainActivity extends AppCompatActivity
             case 1:
                 instance = new BloodCompatibility();
                 tag = "BloodCompatibility";
+                break;
+            case 2:
+                UserDAO userDAO = UserDAO.getInstance(getApplicationContext());
+                userDAO.deleteMyUser();
+                System.exit(0);
                 break;
         }
 
