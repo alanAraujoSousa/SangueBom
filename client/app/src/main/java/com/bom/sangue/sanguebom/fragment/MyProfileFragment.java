@@ -67,6 +67,7 @@ public class MyProfileFragment extends Fragment{
 
             if (login.equals("ivan")) {
                 registerUser(new User("ivan"));
+                refreshScreen();
                 return;
             }
 
