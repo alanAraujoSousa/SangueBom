@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,7 @@ import com.bom.sangue.sanguebom.Utils.HttpManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,7 +85,7 @@ public class SignupFragment extends Fragment {
                 user.put("password", password);
                 user.put("email", email);
                 user.put("userProfile", profile);
-                profile.put("birth_date", "20-11-2002");
+                profile.put("birth_date", "2002-12-11");
                 profile.put("blood_type", bloodType);
 
                 JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, Constants.URL_SIGNUP, user,
@@ -96,7 +98,13 @@ public class SignupFragment extends Fragment {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("SANGUE_BOM REQUEST", "onErrorResponse " + error.getMessage());
+                                error.printStackTrace();
+                                byte[] data  = error.networkResponse.data;
+                                try {
+                                    Log.e("SANGUE_BOM REQUEST", "onErrorResponse " + new String(data, "UTF-8"));
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }) {
                     // FIXME SECURITY FAILURE, this route has a admin token to register new users remove this dependence.
@@ -106,10 +114,22 @@ public class SignupFragment extends Fragment {
                         headers.put("Authorization", "Token 385fa1bcb4372c5262a5d51f291016310d47a5bd");
                         return headers;
                     }
+                    @Override
+                    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                        try {
+                            if (response.data.length == 0) {
+                                byte[] responseData = "{}".getBytes("UTF8");
+                                response = new NetworkResponse(response.statusCode, responseData, response.headers, response.notModified);
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        return super.parseNetworkResponse(response);
+                    }
                 };
 
                 HttpManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
