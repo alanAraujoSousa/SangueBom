@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -39,6 +40,8 @@ public class MyProfileFragment extends Fragment{
             rootView = inflater.inflate(R.layout.login, container, false);
             ImageButton signButton = (ImageButton) rootView.findViewById(R.id.sign_btn);
             signButton.setOnClickListener(mSignUserListener);
+            Button signupButton = (Button) rootView.findViewById(R.id.sign_btn_signup);
+            signupButton.setOnClickListener(mRedirectToSignup);
         }
         return rootView;
     }
