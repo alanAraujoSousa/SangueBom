@@ -36,7 +36,6 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/entrar"
         android:id="@+id/verificar_btn"
         android:background="@drawable/verificar"
         android:onClick=""

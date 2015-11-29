@@ -12,7 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/title_blood_compat"
         android:id="@+id/title_blood_comp"
-        android:layout_below="@+id/menu"
+
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
