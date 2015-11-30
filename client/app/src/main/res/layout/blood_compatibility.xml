@@ -5,27 +5,28 @@
 
 
 
-
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/title_blood_compat"
-        android:id="@+id/title_blood_comp"
-
+        android:id="@+id/title_compatibilidade"
+        android:background="@drawable/compatibilidade"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="30dp"
+        />
 
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/content_blood_compat"
-        android:id="@+id/content_blood_comp"
-        android:layout_below="@+id/title_blood_comp"
+        android:id="@+id/tabela_compatibilidade"
+        android:background="@drawable/tabela_compatibilidade"
+        android:layout_below="@id/title_compatibilidade"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="50dp"
+        />
+
+
+
 
 
 </RelativeLayout>
