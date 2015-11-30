@@ -14,6 +14,7 @@ import com.bom.sangue.sanguebom.fragment.BloodCompatibility;
 import com.bom.sangue.sanguebom.fragment.MyProfileFragment;
 import com.bom.sangue.sanguebom.fragment.NavigationDrawerFragment;
 import com.bom.sangue.sanguebom.R;
+import com.bom.sangue.sanguebom.fragment.NearlyBloodCenter;
 import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
 
 public class MainActivity extends AppCompatActivity
@@ -57,6 +58,10 @@ public class MainActivity extends AppCompatActivity
                 tag = "BloodCompatibility";
                 break;
             case 2:
+                instance = new NearlyBloodCenter();
+                tag = "NearlyBloodCenter";
+                break;
+            case 3:
                 UserDAO userDAO = UserDAO.getInstance(getApplicationContext());
                 userDAO.deleteMyUser();
                 userDAO.closeConnection();

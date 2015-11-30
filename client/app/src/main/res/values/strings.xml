@@ -3,7 +3,8 @@
 
     <string name="title_section1">Meu profile</string>
     <string name="title_section2">Compatibilidade</string>
-    <string name="title_section3">Logout</string>
+    <string name="title_section3">Hemocentros</string>
+    <string name="title_section4">Logout</string>
     <string name="usuario">Insira seu usuario</string>
     <string name="senha">Insira sua senha</string>
     <string name="entrar">Entrar</string>
