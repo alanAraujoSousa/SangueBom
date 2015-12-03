@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -35,9 +36,9 @@ public class MyProfileFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("SANGUE_BOM:", "onCreateView ");
         if (hasToken()) {
             rootView = inflater.inflate(R.layout.my_profile_layout, container, false);
+            refreshLastDonation();
         } else {
             rootView = inflater.inflate(R.layout.login, container, false);
             ImageButton signButton = (ImageButton) rootView.findViewById(R.id.sign_btn);
@@ -46,6 +47,42 @@ public class MyProfileFragment extends Fragment{
             signupButton.setOnClickListener(mRedirectToSignup);
         }
         return rootView;
+    }
+
+    private void refreshLastDonation() {
+        final TextView lastDonation = (TextView) rootView.findViewById(R.id.last_donation);
+
+        try {
+            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL_LAST_DONATION,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String donation = response.getString("donation");
+                                lastDonation.setText(donation);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            byte[] data  = error.networkResponse.data;
+                            try {
+                                Log.e("SANGUE_BOM REQUEST", "onErrorResponse " + new String(data, "UTF-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            HttpManager.getInstance(getContext()).addToRequestQueue(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private View.OnClickListener mRedirectToSignup = new View.OnClickListener() {
