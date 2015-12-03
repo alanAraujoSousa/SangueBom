@@ -14,6 +14,11 @@ class UserViewSet(mixins.RetrieveModelMixin,
     
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+    @detail_route
+    def last_donation(self, request, pk=None):
+        # TODO Give the last donation of user
+        return None
 
     @detail_route
     def blood_type(self, request, pk=None):
