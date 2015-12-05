@@ -15,11 +15,22 @@ class UserProfile(models.Model):
         return u'%s' % self.user.username
     
 class Donation(models.Model):
-    user = models.ForeignKey(UserProfile, related_name='donations')
+    userProfile = models.ForeignKey(UserProfile, related_name='donations')
     donation_date = models.DateField(default=datetime.now)
     
     def __unicode__(self):
         return u'%s' % self.donation_date
+    
+    class Meta :
+        ordering = ('donation_date',)
+        
+class Patient(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    blood_type = models.CharField(max_length=3)
+    
+    def __unicode__(self):
+        return u'%s %s' % (self.first_name, self.last_name)
 
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **Kwargs):

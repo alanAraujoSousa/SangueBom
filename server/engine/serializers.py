@@ -5,8 +5,9 @@ Created on 30 de out de 2015
 '''
 
 from django.contrib.auth.models import User, Group
-from engine.models import UserProfile
+from engine.models import UserProfile, Patient
 from rest_framework import serializers
+from django.forms.models import fields_for_model
 
 class UserProfileSerializer(serializers.ModelSerializer):
     
@@ -35,5 +36,15 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ('name')
 
+
+class PatientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Patient
+        fields = fields_for_model(Patient)
+        
+    def create(self, validated_data):
+        patient = Patient.objects.create(**validated_data)
+        return patient
 
   
