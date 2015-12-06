@@ -116,7 +116,7 @@ public class SignupFragment extends Fragment {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Authorization", "Token 62bc55144ff2f204485350f2eba4d39490693804");
+                        headers.put("Authorization", "Token " + Constants.ROOT_TOKEN);
                         return headers;
                     }
                     @Override

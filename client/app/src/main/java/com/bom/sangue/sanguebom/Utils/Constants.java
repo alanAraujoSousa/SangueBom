@@ -13,6 +13,9 @@ public class Constants {
     public static final String PORT = "8000";
     public static final String URL_SIGNUP = "http://" + HOST+":"+PORT+"/engine/users/";
     public static final String URL_SIGN = "http://"+HOST+":"+PORT+"/api-auth-token/";
-    public static final String URL_LAST_DONATION = "http://" + HOST+":"+PORT+"/engine/users/{id}/last_donation";
-    public static final String URL_LIST_PATIENT = "http://" + HOST+":"+PORT+"/engine/patients";
+    public static final String URL_LAST_DONATION = "http://" + HOST+":"+PORT+"/engine/users/{id}/last_donation/";
+    public static final String URL_LIST_PATIENT = "http://" + HOST+":"+PORT+"/engine/patients/";
+
+    // FIXME This is for prototipal purposes, change it for a regular user.
+    public static final String ROOT_TOKEN = "79f5aa62a9ec986835d4b6890b6ec1c43dd61b59";
 }
