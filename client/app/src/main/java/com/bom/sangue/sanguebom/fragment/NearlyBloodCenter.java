@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bom.sangue.sanguebom.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,10 +33,15 @@ public class NearlyBloodCenter extends Fragment {
 
     private void setUp() {
         if (mMap == null) {
+
             mMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_frag))
                     .getMap();
-
             mMap.setMyLocationEnabled(true);
+            LatLng position = new LatLng(-8.162124, -34.916616);
+            mMap.addMarker(new MarkerOptions().position(position)).setTitle("Você está aqui!");
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
             if (mMap != null) {
                 mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                     @Override
