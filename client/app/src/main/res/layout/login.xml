@@ -9,9 +9,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_login"
         android:background="@drawable/title_login"
+        android:layout_above="@+id/sign_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_marginBottom="60dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -20,8 +20,8 @@
         android:ems="15"
         android:hint="@string/usuario"
         android:id="@+id/sign_login"
-        android:layout_below="@+id/title_login"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@+id/sign_password"
         android:layout_centerHorizontal="true" />
 
 
@@ -32,9 +32,8 @@
         android:ems="15"
         android:hint="@string/senha"
         android:id="@+id/sign_password"
-        android:layout_below="@+id/sign_login"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/sign_login" />
 
 
     <ImageButton
@@ -46,7 +45,7 @@
         android:onClick=""
         android:layout_below="@+id/sign_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="30dp"/>
 
     <ImageButton
         android:layout_width="wrap_content"

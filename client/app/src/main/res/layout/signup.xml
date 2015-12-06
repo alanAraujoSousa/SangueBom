@@ -84,7 +84,8 @@
         android:id="@+id/datanascimento"
         android:layout_below="@+id/titledatanascimento"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/ColorPrimaryDark" />
 
     <TextView
         android:layout_width="wrap_content"
