@@ -15,6 +15,7 @@ import com.bom.sangue.sanguebom.fragment.MyProfileFragment;
 import com.bom.sangue.sanguebom.fragment.NavigationDrawerFragment;
 import com.bom.sangue.sanguebom.R;
 import com.bom.sangue.sanguebom.fragment.NearlyBloodCenter;
+import com.bom.sangue.sanguebom.fragment.PatientFragment;
 import com.bom.sangue.sanguebom.persistence.dao.UserDAO;
 
 public class MainActivity extends AppCompatActivity
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity
                 tag = "NearlyBloodCenter";
                 break;
             case 3:
+                instance = new PatientFragment();
+                tag = "PatientFragment";
+                break;
+            case 4:
                 UserDAO userDAO = UserDAO.getInstance(getApplicationContext());
                 userDAO.deleteMyUser();
                 userDAO.closeConnection();

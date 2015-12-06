@@ -1,6 +1,7 @@
 package com.bom.sangue.sanguebom.persistence.bean;
 
-import com.bom.sangue.sanguebom.provider.DBProvider;
+import com.bom.sangue.sanguebom.Utils.BloodTypeEnum;
+import com.bom.sangue.sanguebom.Utils.GenderEnum;
 
 /**
  * Created by alan on 25/11/15.
@@ -11,6 +12,8 @@ public class User implements Persistent{
     private String login;
     private String password;
     private String email;
+    private BloodTypeEnum bloodType;
+    private GenderEnum gender;
     private String token;
 
     public User(String login, String password, String email, String token) {
@@ -73,5 +76,21 @@ public class User implements Persistent{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public BloodTypeEnum getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(BloodTypeEnum bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public GenderEnum getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 }

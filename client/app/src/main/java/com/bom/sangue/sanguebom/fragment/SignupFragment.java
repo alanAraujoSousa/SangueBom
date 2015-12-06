@@ -1,7 +1,6 @@
 package com.bom.sangue.sanguebom.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.bom.sangue.sanguebom.R;
 import com.bom.sangue.sanguebom.Utils.Constants;
 import com.bom.sangue.sanguebom.Utils.HttpManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -41,12 +39,18 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.signup, container, false);
-        ArrayAdapter<CharSequence> adapter =
+        ArrayAdapter<CharSequence> bloodTypeAdpt =
                 ArrayAdapter.createFromResource(getActivity()
                         , R.array.categoria_sangue,
                         android.R.layout.simple_spinner_item);
 
-        ((Spinner) rootView.findViewById(R.id.signup_blood_type)).setAdapter(adapter);
+        ArrayAdapter<CharSequence> genderAdpt =
+                ArrayAdapter.createFromResource(getActivity()
+                        , R.array.sexo,
+                        android.R.layout.simple_spinner_item);
+
+        ((Spinner) rootView.findViewById(R.id.signup_blood_type)).setAdapter(bloodTypeAdpt);
+        ((Spinner) rootView.findViewById(R.id.signup_gender)).setAdapter(genderAdpt);
         ImageButton btn = (ImageButton) rootView.findViewById(R.id.signup_btn);
         btn.setOnClickListener(mSignUpUserListener);
 
@@ -75,8 +79,8 @@ public class SignupFragment extends Fragment {
             String date = cal.getTime().getTime()
 */
 
-            Spinner spinner = (Spinner) rootView.findViewById(R.id.signup_blood_type);
-            String bloodType = spinner.getSelectedItem().toString();
+            String bloodType = ((Spinner) rootView.findViewById(R.id.signup_blood_type)).getSelectedItem().toString();
+            String gender = ((Spinner) rootView.findViewById(R.id.signup_gender)).getSelectedItem().toString();
 
             try {
                 final JSONObject user = new JSONObject();
@@ -85,8 +89,9 @@ public class SignupFragment extends Fragment {
                 user.put("password", password);
                 user.put("email", email);
                 user.put("userProfile", profile);
-                profile.put("birth_date", "2002-12-11");
+                profile.put("birth_date", "1990-12-20");
                 profile.put("blood_type", bloodType);
+                profile.put("gender", gender);
 
                 JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, Constants.URL_SIGNUP, user,
                         new Response.Listener<JSONObject>() {
@@ -111,7 +116,7 @@ public class SignupFragment extends Fragment {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Authorization", "Token 385fa1bcb4372c5262a5d51f291016310d47a5bd");
+                        headers.put("Authorization", "Token 62bc55144ff2f204485350f2eba4d39490693804");
                         return headers;
                     }
                     @Override

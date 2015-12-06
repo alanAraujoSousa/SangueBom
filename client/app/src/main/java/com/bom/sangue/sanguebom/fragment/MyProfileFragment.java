@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -51,18 +50,17 @@ public class MyProfileFragment extends Fragment{
 
     private void refreshLastDonation() {
         final TextView lastDonation = (TextView) rootView.findViewById(R.id.last_donation);
+        String urlLastDonation = Constants.URL_LAST_DONATION;
+        User user = getUser();
+        String url = urlLastDonation.replace("{id}", user.getLogin());
 
         try {
-            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL_LAST_DONATION,
+            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, url,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            try {
-                                String donation = response.getString("donation");
-                                lastDonation.setText(donation);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            String donation = response.toString();
+                            lastDonation.setText(donation);
                         }
                     },
                     new Response.ErrorListener() {
@@ -177,5 +175,12 @@ public class MyProfileFragment extends Fragment{
         if (user != null && user.getToken() != null && !user.getToken().isEmpty())
             return true;
         return false;
+    }
+
+    private User getUser() {
+        UserDAO userDAO = UserDAO.getInstance(getActivity().getApplicationContext());
+        User user = userDAO.findById(1); // Always save user on ID 1.
+        userDAO.closeConnection();
+        return user;
     }
 }

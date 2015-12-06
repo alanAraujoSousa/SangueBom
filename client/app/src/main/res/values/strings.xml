@@ -4,7 +4,8 @@
     <string name="title_section1">Meu profile</string>
     <string name="title_section2">Compatibilidade</string>
     <string name="title_section3">Hemocentros</string>
-    <string name="title_section4">Logout</string>
+    <string name="title_section4">Lista de pacientes</string>
+    <string name="title_section5">Logout</string>
     <string name="usuario">Insira seu usuario</string>
     <string name="senha">Insira sua senha</string>
     <string name="entrar">Entrar</string>
@@ -17,6 +18,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="categoria">Close </string>
+    <string name="gender">Sexo</string>
+
+    <string-array name="sexo">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
 
     <string-array name="categoria_sangue">
         <item>O-</item>
