@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
- >
+    tools:context=".MyProfileFragment">
 
 
     <ImageView
@@ -22,7 +23,8 @@
         android:id="@+id/nomedoador"
         android:layout_below="@+id/title_cadastro"
         android:layout_centerHorizontal="true"
-         />
+        android:layout_marginTop="50dp"
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -57,43 +59,25 @@
         android:layout_centerHorizontal="true"
         />
 
-
     <EditText
+        android:id="@+id/signup_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/signup_email"
         android:hint="@string/emailcadastro"
         android:layout_below="@+id/confirm_signup_password"
         android:layout_centerHorizontal="true"
-         />
+        />
 
     <TextView
+        android:id="@+id/titletiposanguineo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/signup_email"
-        android:id="@+id/titledatanascimento"
-        android:text="Data de Nascimento:"
-        android:layout_centerHorizontal="true"
-        />
-
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/datanascimento"
-        android:layout_below="@+id/titledatanascimento"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/ColorPrimaryDark" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/datanascimento"
-        android:id="@+id/titletiposanguineo"
         android:text="Tipo sanguíneo:"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         />
 
     <Spinner
@@ -125,14 +109,13 @@
         >
     </Spinner>
 
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/signup_btn"
         android:background="@drawable/btn_cadastrar"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/signup_gender"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/signup_gender" />
+        android:layout_marginTop="40dp" />
 
 </RelativeLayout>

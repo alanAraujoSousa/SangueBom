@@ -66,7 +66,8 @@ public class PatientFragment extends Fragment {
                         @Override
                         public void onResponse(JSONArray response) {
                             try {
-                                names.clear();
+                                names.clear(); // clean screen.
+                                deleteAllPatients(); // clean database.
                                 for (int i=0; i < response.length(); i++) {
                                     JSONObject item = response.getJSONObject(i);
                                     Long id = item.getLong("id");
@@ -75,13 +76,14 @@ public class PatientFragment extends Fragment {
                                     String name = firstName + " " + lastName;
                                     BloodTypeEnum bloodType = BloodTypeEnum.getTypeEnum(item.getString("blood_type"));
                                     GenderEnum gender = GenderEnum.getGenderEnum(item.getString("gender"));
+
                                     Patient patient = new Patient();
                                     patient.setId(id);
                                     patient.setName(name);
                                     patient.setBloodType(bloodType);
                                     patient.setGender(gender);
-                                    registerPatient(patient);
 
+                                    registerPatient(patient);
                                     names.add(name); // fill screen
                                 }
 
@@ -132,6 +134,7 @@ public class PatientFragment extends Fragment {
         }
     }
 
+
     private List<String> getPreviousPatientList() {
         List<String> names = new ArrayList<>();
 
@@ -159,6 +162,12 @@ public class PatientFragment extends Fragment {
         });
 
         return names;
+    }
+
+    private void deleteAllPatients() {
+        PatientDAO patientDAO = PatientDAO.getInstance(getActivity().getApplicationContext());
+        patientDAO.deleteAll();
+        patientDAO.closeConnection();
     }
 
     private void registerPatient(Patient patient) {

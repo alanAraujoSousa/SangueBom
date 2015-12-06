@@ -10,7 +10,7 @@
     <string name="senha">Insira sua senha</string>
     <string name="entrar">Entrar</string>
     <string name="nomecadastro"> Insira seu nome </string>
-    <string name="usuariocadastro"> Insira seu ID </string>
+    <string name="usuariocadastro"> Insira seu login </string>
     <string name="verificardoacao"> ultima vez que você doou? </string>
     <string name="senhacadastro">Insira sua senha</string>
     <string name="confirmarsenhacadastro">confirme sua senha</string>

@@ -58,8 +58,9 @@ public class PatientDAO extends GenericDAO<Patient> {
     public Patient contentValuesToEntity(ContentValues contentValues) {
         Patient patient = new Patient();
         patient.setId(contentValues.getAsLong(ID));
-        patient.setName(contentValues.getAsString("first_name") + " "
-                + contentValues.getAsString("last_name"));
+//        patient.setName(contentValues.getAsString("first_name") + " "
+//                + contentValues.getAsString("last_name"));
+        patient.setName(contentValues.getAsString(NAME));
         patient.setBloodType(BloodTypeEnum.getTypeEnum(contentValues.getAsString(BLOOD_TYPE)));
         patient.setGender(GenderEnum.getGenderEnum(contentValues.getAsString(GENDER)));
 
