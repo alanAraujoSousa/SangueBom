@@ -5,15 +5,16 @@ Created on 30 de out de 2015
 '''
 
 from django.contrib.auth.models import User, Group
-from engine.models import UserProfile, Patient
 from rest_framework import serializers
-from django.forms.models import fields_for_model
+
+from engine.models import UserProfile, Patient, Donation
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ('birth_date', 'blood_type')
+        fields = ('birth_date', 'blood_type', 'gender')
         depth = 1
     
 class UserSerializer(serializers.ModelSerializer):
@@ -23,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'email', 'groups', 'first_name',
                   'last_name', 'userProfile')
-        write_only_fields = ('password',)
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         profile_data = validated_data.pop('userProfile', None)
@@ -34,14 +35,19 @@ class UserSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('name')
-
-
+        fields = ('name',) 
+        
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Donation
+        fields = ('donation_date',)
+    
 class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = fields_for_model(Patient)
+        fields = ('id', 'first_name', 'last_name', 'blood_type', 'gender')
+        read_only_fields = ('id',)
         
     def create(self, validated_data):
         patient = Patient.objects.create(**validated_data)
