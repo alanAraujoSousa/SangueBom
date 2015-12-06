@@ -10,7 +10,7 @@
         android:id="@+id/title_cadastro"
         android:background="@drawable/tittle_cadastro"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         />
 
     <EditText
@@ -78,15 +78,14 @@
         android:layout_centerHorizontal="true"
         />
 
-    <EditText
+    <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="datetime"
-        android:ems="10"
         android:id="@+id/datanascimento"
         android:layout_below="@+id/titledatanascimento"
         android:layout_centerHorizontal="true"
-       />
+        android:layout_marginTop="40dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

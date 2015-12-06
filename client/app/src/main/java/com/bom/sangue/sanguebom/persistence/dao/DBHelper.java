@@ -16,7 +16,7 @@ import java.util.Map;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static  final String DATABASE_NAME = "sanguebomdb";
-    private static  final int  DATABASE_VERSION = 6;
+    private static  final int  DATABASE_VERSION = 7;
     private static DBHelper instance;
 
     public DBHelper(Context context) {

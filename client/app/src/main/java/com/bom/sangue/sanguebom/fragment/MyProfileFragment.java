@@ -144,7 +144,7 @@ public class MyProfileFragment extends Fragment{
 
             // FIXME this is for DEV purposes
             if (login.equals("ivan")) {
-                registerUser(new User("ivan"));
+                registerUser(new User("ivan", Constants.ROOT_TOKEN));
                 refreshScreen();
                 return;
             }
