@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        {% extends "admin/base.html" %}
+        {% block title %}{{ title }} | Sangue Bom admin {% endblock %}
+       
+        {% block extrastyle %}
+         <style>
+                #header {
+                    background-color:#D70A0A;
+                }
+                
+                .module h2, .module caption, .inline-group h2 {
+                    font-size: 22px;
+                    background: #EA9494 !important;                    
+                }
+            </style>
+        {% endblock %}
+           
+        {% block branding %}
+        <h1 id="site-name"><a href="{% url 'admin:index' %}">SANGUE BOM ADMIN</a></h1>
+        {% endblock %}
+        {% block nav-global %}{% endblock %}
+    </body>
+</html>
+    
