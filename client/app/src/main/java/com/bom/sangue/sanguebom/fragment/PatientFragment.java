@@ -20,6 +20,7 @@ import com.bom.sangue.sanguebom.Utils.BloodTypeEnum;
 import com.bom.sangue.sanguebom.Utils.Constants;
 import com.bom.sangue.sanguebom.Utils.GenderEnum;
 import com.bom.sangue.sanguebom.Utils.HttpManager;
+import com.bom.sangue.sanguebom.adapter.PatientListAdapter;
 import com.bom.sangue.sanguebom.persistence.bean.Patient;
 import com.bom.sangue.sanguebom.persistence.dao.PatientDAO;
 
@@ -41,18 +42,18 @@ public class PatientFragment extends Fragment {
 
     View rootView;
 
-    ArrayAdapter<String> patientListAdpt;
-    List<String> names;
+    PatientListAdapter patientListAdpt;
+    List<Patient> patients;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.list_emergency, container, false);
 
-        names = new ArrayList<>();
-        names.addAll(getPreviousPatientList());
+        patients = new ArrayList<Patient>();
+        patients.addAll(getPreviousPatientList());
 
         ListView patientList = (ListView) rootView.findViewById(R.id.patient_list);
-        patientListAdpt = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, names);
+        patientListAdpt = new PatientListAdapter(getActivity(), patients);
         patientList.setAdapter(patientListAdpt);
 
         fillPatientList();
@@ -66,7 +67,7 @@ public class PatientFragment extends Fragment {
                         @Override
                         public void onResponse(JSONArray response) {
                             try {
-                                names.clear(); // clean screen.
+                                patients.clear();
                                 deleteAllPatients(); // clean database.
                                 for (int i=0; i < response.length(); i++) {
                                     JSONObject item = response.getJSONObject(i);
@@ -84,10 +85,10 @@ public class PatientFragment extends Fragment {
                                     patient.setGender(gender);
 
                                     registerPatient(patient);
-                                    names.add(name); // fill screen
+                                    patients.add(patient); // fill screen
                                 }
 
-                                names = alphabeticalOrdering(names);
+                                patients = alphabeticalOrdering(patients);
                                 patientListAdpt.notifyDataSetChanged();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -135,33 +136,31 @@ public class PatientFragment extends Fragment {
     }
 
 
-    private List<String> getPreviousPatientList() {
+    private List<Patient> getPreviousPatientList() {
         List<String> names = new ArrayList<>();
 
         PatientDAO patientDAO = PatientDAO.getInstance(getActivity().getApplicationContext());
         List<Patient> patients = patientDAO.listAll();
         patientDAO.closeConnection();
-
-        for (Patient patient : patients) {
-            names.add(patient.getName());
-        }
-        names = alphabeticalOrdering(names);
-        return names;
+        patients = alphabeticalOrdering(patients);
+        return patients;
     }
 
-    private List<String> alphabeticalOrdering(List<String> names) {
+    private List<Patient> alphabeticalOrdering(List<Patient> patients) {
         // Ordering names.
-        Collections.sort(names, new Comparator<String>() {
-            public int compare(String str1, String str2) {
-                int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
+        Collections.sort(patients, new Comparator<Patient>() {
+            public int compare(Patient p1, Patient p2) {
+                String n1 = p1.getName();
+                String n2 = p2.getName();
+                int res = String.CASE_INSENSITIVE_ORDER.compare(n1, n2);
                 if (res == 0) {
-                    res = str1.compareTo(str2);
+                    res = n1.compareTo(n2);
                 }
                 return res;
             }
         });
 
-        return names;
+        return patients;
     }
 
     private void deleteAllPatients() {

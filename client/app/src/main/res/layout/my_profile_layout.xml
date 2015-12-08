@@ -3,29 +3,29 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
         android:background="@drawable/porcentagem"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/last_donation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Ultima doação"
-        android:id="@+id/last_donation"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp" />
 
     <TextView
+        android:id="@+id/percent_to_donate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0%"
-        android:id="@+id/percent_to_donate"
         android:layout_above="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp" />
